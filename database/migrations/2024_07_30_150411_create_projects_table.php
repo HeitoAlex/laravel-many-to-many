@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('author');
             $table->dateTime('date');
             $table->text('link');
+            $table->file('image');
             $table->text('content');
             $table->timestamps();
             $table->softDeletes();

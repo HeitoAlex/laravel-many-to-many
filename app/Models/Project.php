@@ -17,6 +17,7 @@ class Project extends Model
         'author',
         'date',
         'link',
+        'image',
         'content'
     ];
 

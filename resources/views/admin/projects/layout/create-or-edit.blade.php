@@ -16,7 +16,7 @@
             </div>
         @endif --}}
         <div class="col-8">
-            <form action="@yield('form-action')" method="POST">
+            <form action="@yield('form-action')" method="POST" enctype="multipart/form-data">
                 @yield('form-method')
                 @csrf
 
@@ -51,6 +51,15 @@
                     <label for="url">Project link:</label>
                     <input type="url" name="url" id="url" class="form-control mb-2" value="{{ old('url', $project->link) }}">
                     @error("url")
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="image">Image</label>
+                    <input type="file" name="image" id="image" class="form-control mb-2" value="{{ old('image', $project->image) }}">
+                    @error("image")
                         <div class="alert alert-danger">
                             {{ $message }}
                         </div>

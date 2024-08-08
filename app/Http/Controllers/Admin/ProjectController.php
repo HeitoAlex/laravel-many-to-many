@@ -9,6 +9,7 @@ use App\Models\Type;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -38,9 +39,11 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->validated();
+        $img_path = Storage::put('uploads/projects', $data['image']);
 
         $data["author"] = Auth::user()->name;
         $data["date"] = Carbon::now();
+        $data["image"] = $img_path;
         $newProject = Project::create($data);
 
         return redirect()->route('admin.projects.show', $newProject);

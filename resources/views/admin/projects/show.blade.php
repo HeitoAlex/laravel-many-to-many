@@ -24,6 +24,7 @@
             <h4>
                 {{ $project->link }}
             </h4>
+            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }} project image" class="img-fluid">
             <p>
                 {{ $project->content }}
             </p>
