@@ -14,6 +14,9 @@
                             Type
                         </th>
                         <th scope="col">
+                            Tag
+                        </th>
+                        <th scope="col">
                             Title
                         </th>
                         <th scope="col">
@@ -35,6 +38,14 @@
                             </td>
                             <td>
                                 {{ $project->type->name }}
+                            </td>
+                            <td>
+                                @forelse ( $project->tags as $tag )
+                                    <span class="badge rounded-pill" style="background-color: {{ $tag->color }}">{{ $tag->name }}</span>
+                                    {{-- @if (!$loop->last),@endif --}}
+                                @empty
+                                    No Tags
+                                @endforelse
                             </td>
                             <td>
                                 {{ $project->title }}

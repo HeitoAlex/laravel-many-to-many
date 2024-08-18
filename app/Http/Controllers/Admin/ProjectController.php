@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Models\Tag;
 use App\Models\Type;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,13 +32,14 @@ class ProjectController extends Controller
     {
         $project = new Project();
         $types = Type::all();
-        return view('admin.projects.create', compact('project','types'));
+        $tags = Tag::all();
+        return view('admin.projects.create', compact('project','types', 'tags'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
         $data = $request->validated();
         $img_path = Storage::put('uploads/projects', $data['image']);
@@ -45,6 +48,7 @@ class ProjectController extends Controller
         $data["date"] = Carbon::now();
         $data["image"] = $img_path;
         $newProject = Project::create($data);
+        $newProject->tags()->sync($data['tags']);
 
         return redirect()->route('admin.projects.show', $newProject);
     }
@@ -63,7 +67,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project','types'));
+        $tags = Tag::all();
+        return view('admin.projects.edit', compact('project','types', 'tags'));
     }
 
     /**
@@ -76,6 +81,7 @@ class ProjectController extends Controller
         // $data["author"] = Auth::user()->name;
         // $data["date"] = Carbon::now();
         $project->update($data);
+        $project->tags()->sync($data['tags']);
 
         return redirect()->route('admin.projects.show', $project);
     }
@@ -85,6 +91,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $project->tags()->sync([]);  // oppure $project->tags()->detach();
         $project->delete();
 
         return redirect()->route('admin.projects.index');

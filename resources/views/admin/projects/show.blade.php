@@ -15,6 +15,14 @@
                     {{ $project->type->name }}
                 </h4>
             @endif
+            <p>
+                @forelse ( $project->tags as $tag )
+                    <span class="badge rounded-pill" style="background-color: {{ $tag->color }}">{{ $tag->name }}</span>
+                    {{-- @if (!$loop->last),@endif --}}
+                @empty
+                    No Tags
+                @endforelse
+            </p>
             <h2>
                 {{ $project->author }}
             </h2>

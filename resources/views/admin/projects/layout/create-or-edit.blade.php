@@ -36,12 +36,31 @@
                     @enderror
                 </div>
                 <div class="mb-3">
+                    <label for="type_id">Type:</label>
                     <select class="form-select" name="type_id">
                         @foreach ( $types as $type )
                             <option value="{{ $type->id }}" {{ $type->id == old('type_id', $project->type_id) ? 'selected' : ''}}> {{ $type->name }} </option>
                         @endforeach
                     </select>
                     @error("type_id")
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="tags">Tags:</label>
+                    <div class="btn-group d-flex flex-wrap" role="group" aria-label="Basic checkbox toggle button group">
+                        @foreach ( $tags as $tag )
+                            @if ($errors->any())
+                                <input name="tags[]" type="checkbox" class="btn-check" id="tag-check-{{ $tag->id }}" autocomplete="off" value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                            @else
+                                <input name="tags[]" type="checkbox" class="btn-check" id="tag-check-{{ $tag->id }}" autocomplete="off" value="{{ $tag->id }}" {{ $project->tags->contains($tag) ? 'checked' : '' }}>
+                            @endif
+                            <label class="btn btn-outline-primary mb-2 d-inline-block" for="tag-check-{{ $tag->id }}">{{ $tag->name }}</label>
+                        @endforeach
+                    </div>
+                    @error("tags")
                         <div class="alert alert-danger">
                             {{ $message }}
                         </div>
