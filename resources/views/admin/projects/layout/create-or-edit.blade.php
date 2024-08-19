@@ -67,9 +67,9 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="url">Project link:</label>
-                    <input type="url" name="url" id="url" class="form-control mb-2" value="{{ old('url', $project->link) }}">
-                    @error("url")
+                    <label for="link">Project link:</label>
+                    <input type="url" name="link" id="link" class="form-control mb-2" value="{{ old('link', $project->link) }}">
+                    @error("link")
                         <div class="alert alert-danger">
                             {{ $message }}
                         </div>

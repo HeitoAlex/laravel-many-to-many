@@ -26,6 +26,7 @@ class ProjectSeeder extends Seeder
             $newProject->author = $faker->name(50);
             $newProject->date = $faker->dateTimeThisYear();
             $newProject->link = $faker->url(50);
+            $newProject->image = $faker->imageUrl();
             $newProject->content = $faker->realText(500);
             $newProject->save();
         }
